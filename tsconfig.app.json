@@ -18,7 +18,22 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "src",
+    "paths": {
+      "@app": ["app"],
+      "@app/*": ["app/*"],
+      "@components": ["components"],
+      "@components/*": ["components/*"],
+      "@assets": ["assets"],
+      "@assets/*": ["assets/*"],
+      "@atomic": ["atomic"],
+      "@atomic/*": ["atomic/*"],
+      "@utils": ["utils"],
+      "@utils/*": ["utils/*"]
+    }
+
   },
   "include": ["src"]
 }
