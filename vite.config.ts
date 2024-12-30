@@ -8,6 +8,8 @@ export default defineConfig({
       "@atomic": path.resolve(__dirname, "./src/atomic"),
       "@app": path.resolve(__dirname, "./src/app"),
       "@components": path.resolve(__dirname, "./src/app/components"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
+      "@utils": path.resolve(__dirname, "./src/utils"), 
     },
   },
   plugins: [react()],
