@@ -13,7 +13,8 @@
     "@vitejs/plugin-react": "4.3.4",
     "postcss-advanced-variables": "5.0.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwind-variants": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.25.8",

@@ -1,12 +1,12 @@
 export const Spacing = {
-    none: 0,
-    xxs: 4,
-    xs: 8,
-    sm: 12,
-    md: 16,
-    lg: 24,
-    xl: 32,
-    xxl: 40
+  none: '0',
+  xxs: '4px',
+  xs: '8px',
+  sm: '12px',
+  md: '16px',
+  lg: '24px',
+  xl: '32px',
+  xxl: '64px',
 }
 
 export const Colors = {
@@ -19,3 +19,5 @@ export const Colors = {
       hard: "#7A7A7A",
     },
 }
+
+export const ButtonMinHeight = "48px"
