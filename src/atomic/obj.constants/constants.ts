@@ -20,4 +20,14 @@ export const Colors = {
     },
 }
 
+export const FontSize = {
+    '3xs': '12px',
+    '2xs': '14px',
+    xs: '16px',
+    sm: '18px',
+    md: '20px',
+    lg: '24px',
+    xl: '32px',
+}
+
 export const ButtonHeight = "48px"

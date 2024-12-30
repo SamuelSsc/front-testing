@@ -1,5 +1,6 @@
 import  { useState } from "react";
-import { Button, Card, CardBody, CardFooter, CardHeader } from "./atomic";
+import { Button, Card, CardBody,  CardHeader } from "./atomic";
+import { BodyPrimary, H1 } from "@atomic/atm.typography";
 
 
 function App() {
@@ -14,27 +15,34 @@ function App() {
 
   return (
     <>
-      <Button variant="danger">AlertButton</Button>
-      <h1>Hello World</h1>
-      <div className="flex justify-center">
+      <div className="flex justify-center my-xxl">
       <Card className="w-3/5">
-        {/* <CardHeader>
-        <h1>To Do List</h1>
-        </CardHeader> */}
+        <CardHeader>
+        <H1>To Do List</H1>
+        </CardHeader>
         <CardBody>
         <div className="flex flex justify-between items-center">
           <div className="flex flex-col mb-xl">
           <label className="mb-xs">Tarefa</label>
+          {/* toDo: create component input */}
           <input placeholder="descreva sua tarefa" className="border borde" onChange={(e)=> setNewTaskValue(e.target.value)} key={`input-add-new-task-${inputKey}`}/>
           </div>
           <Button onClick={handleAddedNewTask}>Adicionar</Button>
           </div>
           {tasks.map((item)=> (
-            <Card className="py-lg my-sm">
+            <Card className="py-lg my-sm relative">
               <CardBody>
               <div className="flex flex justify-between items-center">
-                {item}
-                <input type="checkbox" className="h-md w-md"/>
+                <BodyPrimary>{item}</BodyPrimary>
+                {/* toDo: create component checkbox */}
+                <div className="flex flex-col">
+                  <input type="checkbox" className="h-md w-md"/>
+                </div>
+                  <div className="absolute right-md top-xs flex gap-sm mb-md">
+                    {/* Edit and delete funtionality */}
+                    <button className="bg-[red] w-lg h-lg">E</button>
+                    <button className="bg-[green] w-lg h-lg">D</button>
+                  </div>
               </div>
               </CardBody>
             </Card>
