@@ -1,6 +1,6 @@
 import  { useState } from "react";
 import { Button, Card, CardBody,  CardHeader } from "./atomic";
-import { BodyPrimary, H1 } from "@atomic/atm.typography";
+import { BodyPrimary, H1, InputLabel } from "@atomic/atm.typography";
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <CardBody>
         <div className="flex flex justify-between items-center">
           <div className="flex flex-col mb-xl">
-          <label className="mb-xs">Tarefa</label>
+          <InputLabel>Tarefa</InputLabel>
           {/* toDo: create component input */}
           <input placeholder="descreva sua tarefa" className="border borde" onChange={(e)=> setNewTaskValue(e.target.value)} key={`input-add-new-task-${inputKey}`}/>
           </div>
