@@ -20,4 +20,4 @@ export const Colors = {
     },
 }
 
-export const ButtonMinHeight = "48px"
+export const ButtonHeight = "48px"
