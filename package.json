@@ -12,7 +12,9 @@
   "dependencies": {
     "@vitejs/plugin-react": "4.3.4",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.15.0",
     "lucide-react": "^0.469.0",
+    "motion": "^11.15.0",
     "postcss-advanced-variables": "5.0.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",

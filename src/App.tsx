@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Card, CardBody, Colors } from "./atomic";
 import { BodyPrimary, H1, InputLabel } from "@atomic/atm.typography";
 import { Trash2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
   const [tasks, setTasks] = useState<{ text: string; checked: boolean }[]>([]);
@@ -38,12 +39,12 @@ function App() {
       <div className="flex justify-center my-xxl">
         <section className="w-2/5">
           <H1 className="text-center">To Do List</H1>
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col mb-xl">
+          <div className="flex justify-between items-center gap-md">
+            <div className="flex flex-col mb-xl w-full">
               <InputLabel>Tarefa</InputLabel>
               <input
                 placeholder="Descreva sua tarefa"
-                className="border border-gray-300 p-2 rounded"
+                className="border border-gray-300 p-md rounded"
                 onChange={(e) => setNewTaskValue(e.target.value)}
                 key={`input-add-new-task-${inputKey}`}
               />
@@ -51,37 +52,48 @@ function App() {
             <Button onClick={handleAddedNewTask}>Adicionar</Button>
           </div>
           <section className="max-h-[calc(100vh-300px)] overflow-y-auto">
-            {tasks.map((task) => (
-              <Card key={task.text} className="py-lg my-sm relative">
-                <CardBody>
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center justify-center gap-sm">
-                      <input
-                        type="checkbox"
-                        className="h-md w-md"
-                        checked={task.checked}
-                        onChange={() => handleCheck(task.text)}
-                      />
-                      <BodyPrimary
-                        className={`${
-                          task.checked ? "line-through text-gray-500" : ""
-                        }`}
-                      >
-                        {task.text}
-                      </BodyPrimary>
-                    </div>
-                    <div className="flex flex-row gap-sm">
-                      <button
-                        className="w-lg h-lg"
-                        onClick={() => handleDeleteTask(task.text)}
-                      >
-                        <Trash2 color={Colors.feedback.error} />
-                      </button>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            ))}
+            <AnimatePresence>
+              {tasks.map((task) => (
+                <motion.div
+                  key={task.text}
+                  layout
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Card className="py-lg my-sm relative">
+                    <CardBody>
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center justify-center gap-sm">
+                          <input
+                            type="checkbox"
+                            className="h-md w-md"
+                            checked={task.checked}
+                            onChange={() => handleCheck(task.text)}
+                          />
+                          <BodyPrimary
+                            className={`${
+                              task.checked ? "line-through text-gray-500" : ""
+                            }`}
+                          >
+                            {task.text}
+                          </BodyPrimary>
+                        </div>
+                        <div className="flex flex-row gap-sm">
+                          <button
+                            className="w-lg h-lg"
+                            onClick={() => handleDeleteTask(task.text)}
+                          >
+                            <Trash2 color={Colors.feedback.error} />
+                          </button>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </section>
         </section>
       </div>
