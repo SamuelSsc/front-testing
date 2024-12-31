@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Card, CardBody, Colors } from "./atomic";
 import { BodyPrimary, H1, InputLabel } from "@atomic/atm.typography";
-import { Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { button } from "framer-motion/client";
 
 function App() {
   const [tasks, setTasks] = useState<{ text: string; checked: boolean }[]>([]);
@@ -38,18 +39,21 @@ function App() {
     <>
       <div className="flex justify-center my-xxl">
         <section className="w-2/5">
-          <H1 className="text-center">To Do List</H1>
+          <H1 className="text-center">{strings.title}</H1>
           <div className="flex justify-between items-center gap-md">
             <div className="flex flex-col mb-xl w-full">
-              <InputLabel>Tarefa</InputLabel>
+              <InputLabel>{strings.form.label}</InputLabel>
+              {/* toDo: Implementar um atomic para o input usando react hook form  */}
               <input
-                placeholder="Descreva sua tarefa"
+                placeholder={strings.form.placeholder}
                 className="border border-gray-300 p-md rounded"
                 onChange={(e) => setNewTaskValue(e.target.value)}
                 key={`input-add-new-task-${inputKey}`}
               />
             </div>
-            <Button onClick={handleAddedNewTask}>Adicionar</Button>
+            <Button onClick={handleAddedNewTask} rightIcon={<Plus />}>
+              {strings.form.button}
+            </Button>
           </div>
           <section className="max-h-[calc(100vh-300px)] overflow-y-auto">
             <AnimatePresence>
@@ -66,6 +70,7 @@ function App() {
                     <CardBody>
                       <div className="flex justify-between items-center">
                         <div className="flex items-center justify-center gap-sm">
+                          {/* toDo: Implementar um atomic para o checkbox */}
                           <input
                             type="checkbox"
                             className="h-md w-md"
@@ -102,3 +107,12 @@ function App() {
 }
 
 export default App;
+
+const strings = {
+  title: "Lista de tarefas!",
+  form: {
+    label: "Tarefa",
+    placeholder: "Descreva sua tarefa",
+    button: "Adicionar",
+  },
+};
