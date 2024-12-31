@@ -1,11 +1,10 @@
 {
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
-    "jsx": "react",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  },
-  "include": ["src/**/*", "jest.setup.ts"]
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
 }
