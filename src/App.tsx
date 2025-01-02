@@ -3,36 +3,17 @@ import { Button, Card, CardBody, Colors } from "./atomic";
 import { BodyPrimary, H1, InputLabel } from "@atomic/atm.typography";
 import { Plus, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { button } from "framer-motion/client";
+import { useTasks } from "@app/domain";
 
 function App() {
-  const [tasks, setTasks] = useState<{ text: string; checked: boolean }[]>([]);
-  const [newTaskValue, setNewTaskValue] = useState<string>();
-  const [inputKey, setInputKey] = useState<number>(0);
+  const { tasks, addTask, removeTask, toggleTask } = useTasks();
+  const [newTaskValue, setNewTaskValue] = useState<string>("");
+  const [inputKey, setInputKey] = useState(0);
 
   const handleAddedNewTask = () => {
-    if (!newTaskValue || tasks.some((task) => task.text === newTaskValue))
-      return;
-    const newTask = { text: newTaskValue, checked: false };
-    setTasks((prev) => [newTask, ...prev]);
+    addTask(newTaskValue);
     setInputKey((prev) => prev + 1);
-  };
-
-  const handleDeleteTask = (text: string) => {
-    setTasks((prev) => prev.filter((task) => task.text !== text));
-  };
-
-  const handleCheck = (text: string) => {
-    setTasks((prev) => {
-      const updatedTasks = prev.map((task) =>
-        task.text === text ? { ...task, checked: !task.checked } : task
-      );
-
-      const unchecked = updatedTasks.filter((task) => !task.checked);
-      const checked = updatedTasks.filter((task) => task.checked);
-
-      return [...unchecked, ...checked];
-    });
+    setNewTaskValue("");
   };
 
   return (
@@ -75,7 +56,7 @@ function App() {
                             type="checkbox"
                             className="h-md w-md"
                             checked={task.checked}
-                            onChange={() => handleCheck(task.text)}
+                            onChange={() => toggleTask(task.text)}
                           />
                           <BodyPrimary
                             className={`${
@@ -88,7 +69,7 @@ function App() {
                         <div className="flex flex-row gap-sm">
                           <button
                             className="w-lg h-lg"
-                            onClick={() => handleDeleteTask(task.text)}
+                            onClick={() => removeTask(task.text)}
                           >
                             <Trash2 color={Colors.feedback.error} />
                           </button>
