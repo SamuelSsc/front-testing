@@ -10,5 +10,11 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
+    "^@app/(.*)$": "<rootDir>/src/app/$1",
+    "^@components/(.*)$": "<rootDir>/src/components/$1",
+    "^@assets/(.*)$": "<rootDir>/src/assets/$1",
+    "^@atomic/(.*)$": "<rootDir>/src/atomic/$1",
+    "^@utils$": "<rootDir>/src/utils",
+    "^@utils/(.*)$": "<rootDir>/src/utils/$1",
   },
 };
