@@ -1,4 +1,10 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  waitFor,
+} from "@testing-library/react";
 import App from "./App";
 
 describe("App Component", () => {
@@ -67,7 +73,7 @@ describe("App Component", () => {
     expect(tasks).toHaveLength(1);
   });
 
-  it.only("should toggle the checked state of a task and strike through the text", () => {
+  it("should toggle the checked state of a task and strike through the text", () => {
     render(<App />);
     const input = screen.getByPlaceholderText("Descreva sua tarefa");
     fireEvent.change(input, { target: { value: "Tarefa Existente" } });
@@ -84,5 +90,42 @@ describe("App Component", () => {
     const taskText = screen.getByText("Tarefa Existente");
     expect(taskText).toHaveClass("line-through");
     expect(taskText).toHaveClass("text-gray-500");
+  });
+
+  it("should delete a task and remove it from the document", async () => {
+    render(<App />);
+
+    const input = screen.getByPlaceholderText("Descreva sua tarefa");
+    fireEvent.change(input, { target: { value: "Tarefa para Deletar" } });
+
+    const button = screen.getByText("Adicionar");
+    fireEvent.click(button);
+
+    const task = screen.queryByText("Tarefa para Deletar");
+    expect(task).not.toBeNull();
+
+    const deleteButton = screen.getByLabelText("Deletar Tarefa");
+    fireEvent.click(deleteButton);
+
+    // Usado para fazer com que o código espere um determinado tempo até que a condição interna seja satisfeita sendo trigado repetidas vezes até estourar o timeout.
+    await waitFor(() => {
+      const removedTask = screen.queryByText("Tarefa para Deletar");
+      expect(removedTask).toBeNull();
+    });
+  });
+
+  it("should show the placeholder and no tasks initially", () => {
+    render(<App />);
+
+    const input: HTMLInputElement = screen.getByPlaceholderText(
+      "Descreva sua tarefa"
+    );
+    const tasks = screen.queryAllByRole("checkbox");
+    const placeholder = screen.queryByText("Nenhuma tarefa adicionada ainda!");
+
+    expect(tasks).toHaveLength(0);
+    expect(input).toBeInTheDocument();
+    expect(input.value).toBe("");
+    expect(placeholder).toBeInTheDocument();
   });
 });

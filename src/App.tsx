@@ -14,8 +14,6 @@ function App() {
     setNewTaskValue("");
   };
 
-  console.log(newTaskValue);
-
   return (
     <>
       <div className="flex justify-center my-xxl">
@@ -71,6 +69,7 @@ function App() {
                             <button
                               className="w-lg h-lg"
                               onClick={() => removeTask(task.text)}
+                              aria-label="Deletar Tarefa"
                             >
                               <Trash2 color={Colors.feedback.error} />
                             </button>
@@ -82,7 +81,7 @@ function App() {
                 ))
               ) : (
                 <BodyPrimary className="text-center mt-xl">
-                  Nenhuma tarefa adicionada ainda!
+                  {strings.noData}
                 </BodyPrimary>
               )}
             </AnimatePresence>
@@ -102,4 +101,5 @@ const strings = {
     placeholder: "Descreva sua tarefa",
     button: "Adicionar",
   },
+  noData: "Nenhuma tarefa adicionada ainda!",
 };
