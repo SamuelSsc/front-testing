@@ -5,9 +5,11 @@ import {
   cleanup,
   waitFor,
 } from "@testing-library/react";
-import HomePage from "./home.page";
+import HomePage, { homeStrings } from "./home.page";
 
 describe("Home Page integration tests", () => {
+  const roleCheckbox = "checkbox";
+
   afterEach(() => {
     cleanup();
   });
@@ -26,90 +28,97 @@ describe("Home Page integration tests", () => {
   });
 
   it("should add a new task when the button is clicked and clear the input", () => {
+    const inputValue = "Nova Tarefa";
     render(<HomePage />);
 
     const input: HTMLInputElement = screen.getByPlaceholderText(
-      "Descreva sua tarefa"
+      homeStrings.form.placeholder
     );
 
-    fireEvent.change(input, { target: { value: "Nova Tarefa" } });
+    fireEvent.change(input, { target: { value: inputValue } });
 
-    const button = screen.getByText("Adicionar");
+    const button = screen.getByText(homeStrings.form.button);
 
     fireEvent.click(button);
 
-    const element = screen.queryByText("Nova Tarefa");
+    const element = screen.queryByText(inputValue);
     expect(element).not.toBeNull();
-    expect(() => screen.getByText("Nova Tarefa")).not.toThrow();
+    expect(() => screen.getByText(inputValue)).not.toThrow();
     expect(input.value).toBe("");
   });
 
   it("should not add a task if input is empty", () => {
     render(<HomePage />);
 
-    const button = screen.getByText("Adicionar");
+    const button = screen.getByText(homeStrings.form.button);
     fireEvent.click(button);
 
-    const tasks = screen.queryAllByRole("checkbox");
+    const tasks = screen.queryAllByRole(roleCheckbox);
     expect(tasks).toHaveLength(0);
   });
 
   it("should not add a task if it already exists in the document", () => {
+    const inputValue = "Tarefa Existente";
     render(<HomePage />);
 
-    const input = screen.getByPlaceholderText("Descreva sua tarefa");
-    fireEvent.change(input, { target: { value: "Tarefa Existente" } });
+    const input = screen.getByPlaceholderText(homeStrings.form.placeholder);
+    fireEvent.change(input, { target: { value: inputValue } });
 
-    const button = screen.getByText("Adicionar");
+    const button = screen.getByText(homeStrings.form.button);
     fireEvent.click(button);
 
-    const existingTask = screen.queryByText("Tarefa Existente");
+    const existingTask = screen.queryByText(inputValue);
     expect(existingTask).not.toBeNull();
 
-    fireEvent.change(input, { target: { value: "Tarefa Existente" } });
+    fireEvent.change(input, { target: { value: inputValue } });
     fireEvent.click(button);
 
-    const tasks = screen.queryAllByRole("checkbox");
+    const tasks = screen.queryAllByRole(roleCheckbox);
     expect(tasks).toHaveLength(1);
   });
 
   it("should toggle the checked state of a task and strike through the text", () => {
+    const inputValue = "Tarefa Existente";
     render(<HomePage />);
-    const input = screen.getByPlaceholderText("Descreva sua tarefa");
-    fireEvent.change(input, { target: { value: "Tarefa Existente" } });
 
-    const button = screen.getByText("Adicionar");
+    const input = screen.getByPlaceholderText(homeStrings.form.placeholder);
+    fireEvent.change(input, { target: { value: inputValue } });
+
+    const button = screen.getByText(homeStrings.form.button);
     fireEvent.click(button);
 
-    const tasks = screen.queryAllByRole("checkbox");
+    const tasks = screen.queryAllByRole(roleCheckbox);
     const task = tasks[0];
 
     expect(task).not.toBeNull();
     fireEvent.click(task);
     expect(task).toHaveProperty("checked", true);
-    const taskText = screen.getByText("Tarefa Existente");
+    const taskText = screen.getByText(inputValue);
     expect(taskText).toHaveClass("line-through");
     expect(taskText).toHaveClass("text-gray-500");
   });
 
   it("should delete a task and remove it from the document", async () => {
+    const InputValue = "Tarefa para Deletar";
     render(<HomePage />);
 
-    const input = screen.getByPlaceholderText("Descreva sua tarefa");
-    fireEvent.change(input, { target: { value: "Tarefa para Deletar" } });
+    const input = screen.getByPlaceholderText(homeStrings.form.placeholder);
+    fireEvent.change(input, { target: { value: InputValue } });
 
-    const button = screen.getByText("Adicionar");
+    const button = screen.getByText(homeStrings.form.button);
     fireEvent.click(button);
 
-    const task = screen.queryByText("Tarefa para Deletar");
+    const task = screen.queryByText(InputValue);
     expect(task).not.toBeNull();
 
-    const deleteButton = screen.getByLabelText("Deletar Tarefa");
+    const deleteButton = screen.getByLabelText(
+      homeStrings.form.ariaLabelDelete
+    );
     fireEvent.click(deleteButton);
 
     // Usado para fazer com que o código espere um determinado tempo até que a condição interna seja satisfeita sendo trigado repetidas vezes até estourar o timeout.
     await waitFor(() => {
-      const removedTask = screen.queryByText("Tarefa para Deletar");
+      const removedTask = screen.queryByText(InputValue);
       expect(removedTask).toBeNull();
     });
   });
@@ -118,10 +127,10 @@ describe("Home Page integration tests", () => {
     render(<HomePage />);
 
     const input: HTMLInputElement = screen.getByPlaceholderText(
-      "Descreva sua tarefa"
+      homeStrings.form.placeholder
     );
-    const tasks = screen.queryAllByRole("checkbox");
-    const placeholder = screen.queryByText("Nenhuma tarefa adicionada ainda!");
+    const tasks = screen.queryAllByRole(roleCheckbox);
+    const placeholder = screen.queryByText(homeStrings.noData);
 
     expect(tasks).toHaveLength(0);
     expect(input).toBeInTheDocument();

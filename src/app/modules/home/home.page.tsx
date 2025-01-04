@@ -25,20 +25,20 @@ function HomePage() {
     <>
       <div className="flex justify-center my-xxl">
         <section className="w-2/5">
-          <H1 className="text-center">{strings.title}</H1>
+          <H1 className="text-center">{homeStrings.title}</H1>
           <div className="flex justify-between items-center gap-md">
             <div className="flex flex-col mb-xl w-full">
-              <InputLabel>{strings.form.label}</InputLabel>
+              <InputLabel>{homeStrings.form.label}</InputLabel>
               {/* toDo: Implementar um atomic para o input usando react hook form  */}
               <input
-                placeholder={strings.form.placeholder}
+                placeholder={homeStrings.form.placeholder}
                 className="border border-gray-300 p-md rounded"
                 onChange={(e) => setNewTaskValue(e.target.value)}
                 value={newTaskValue}
               />
             </div>
             <Button onClick={handleAddedNewTask} rightIcon={<Plus />}>
-              {strings.form.button}
+              {homeStrings.form.button}
             </Button>
           </div>
           <section className="max-h-[calc(100vh-300px)] overflow-y-auto">
@@ -76,7 +76,7 @@ function HomePage() {
                             <button
                               className="w-lg h-lg"
                               onClick={() => removeTask(task.text)}
-                              aria-label="Deletar Tarefa"
+                              aria-label={homeStrings.form.ariaLabelDelete}
                             >
                               <Trash2 color={Colors.feedback.error} />
                             </button>
@@ -88,7 +88,7 @@ function HomePage() {
                 ))
               ) : (
                 <BodyPrimary className="text-center mt-xl">
-                  {strings.noData}
+                  {homeStrings.noData}
                 </BodyPrimary>
               )}
             </AnimatePresence>
@@ -101,12 +101,13 @@ function HomePage() {
 
 export default HomePage;
 
-const strings = {
+export const homeStrings = {
   title: "Lista de tarefas!",
   form: {
     label: "Tarefa",
     placeholder: "Descreva sua tarefa",
     button: "Adicionar",
+    ariaLabelDelete: "Deletar Tarefa",
   },
   noData: "Nenhuma tarefa adicionada ainda!",
 };
