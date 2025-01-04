@@ -5,9 +5,9 @@ import {
   cleanup,
   waitFor,
 } from "@testing-library/react";
-import App from "./App";
+import HomePage from "./home.page";
 
-describe("App Component", () => {
+describe("Home Page integration tests", () => {
   afterEach(() => {
     cleanup();
   });
@@ -26,7 +26,7 @@ describe("App Component", () => {
   });
 
   it("should add a new task when the button is clicked and clear the input", () => {
-    render(<App />);
+    render(<HomePage />);
 
     const input: HTMLInputElement = screen.getByPlaceholderText(
       "Descreva sua tarefa"
@@ -45,7 +45,7 @@ describe("App Component", () => {
   });
 
   it("should not add a task if input is empty", () => {
-    render(<App />);
+    render(<HomePage />);
 
     const button = screen.getByText("Adicionar");
     fireEvent.click(button);
@@ -55,7 +55,7 @@ describe("App Component", () => {
   });
 
   it("should not add a task if it already exists in the document", () => {
-    render(<App />);
+    render(<HomePage />);
 
     const input = screen.getByPlaceholderText("Descreva sua tarefa");
     fireEvent.change(input, { target: { value: "Tarefa Existente" } });
@@ -74,7 +74,7 @@ describe("App Component", () => {
   });
 
   it("should toggle the checked state of a task and strike through the text", () => {
-    render(<App />);
+    render(<HomePage />);
     const input = screen.getByPlaceholderText("Descreva sua tarefa");
     fireEvent.change(input, { target: { value: "Tarefa Existente" } });
 
@@ -93,7 +93,7 @@ describe("App Component", () => {
   });
 
   it("should delete a task and remove it from the document", async () => {
-    render(<App />);
+    render(<HomePage />);
 
     const input = screen.getByPlaceholderText("Descreva sua tarefa");
     fireEvent.change(input, { target: { value: "Tarefa para Deletar" } });
@@ -115,7 +115,7 @@ describe("App Component", () => {
   });
 
   it("should show the placeholder and no tasks initially", () => {
-    render(<App />);
+    render(<HomePage />);
 
     const input: HTMLInputElement = screen.getByPlaceholderText(
       "Descreva sua tarefa"
