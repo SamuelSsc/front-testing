@@ -1,9 +1,12 @@
 /// <reference types="cypress" />
+const sizes = ['macbook-16', 'macbook-15', 'macbook-13', 'macbook-11', 'ipad-2', 'ipad-mini', 'iphone-xr', 'iphone-x', 'iphone-6+', 'iphone-se2'];
 
 
-describe(`Home Page e2e tests`, () => {
+sizes.forEach((size) => {
+  describe(`Home Page e2e tests on ${size}`, () => {
   
   beforeEach(() => {
+    cy.viewport(size as any);
     cy.visit("http://localhost:5173/");
   });
 
@@ -116,4 +119,5 @@ describe(`Home Page e2e tests`, () => {
 
     cy.contains(task).should("exist");
   });
+});
 });
