@@ -22,7 +22,7 @@ function HomePage() {
   };
 
   return (
-    <>
+    <main>
       <div className="flex justify-center my-xxl">
         <section className="w-full md:w-2/5 px-md">
           <H1 className="text-center">{homeStrings.title}</H1>
@@ -98,7 +98,7 @@ function HomePage() {
           </section>
         </section>
       </div>
-    </>
+    </main>
   );
 }
 
