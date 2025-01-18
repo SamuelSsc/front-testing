@@ -7,15 +7,24 @@ import {
 } from "@testing-library/react";
 import HomePage, { homeStrings } from "./home.page";
 
+
+// *********** UTILIZANDO JEST PARA TESTES DE INTEGRAÇÃO PODEMOS: ***********
+// Testar interações entre o hook e o componente:
+// Interações entre diferentes módulos.
+// Fluxo de ações mais completo.
+// Alterações de Layout com base no DOM.
+
+
 describe("Home Page integration tests", () => {
   const roleCheckbox = "checkbox";
 
   afterEach(() => {
+    //limpa DOM
     cleanup();
   });
 
   beforeEach(() => {
-    // criando um mock dessa propriedade apenas no ambiente de teste. Esse mock é completamente isolado e não afeta o localStorage real do navegador.
+    // Mock dessa propriedade apenas no ambiente de teste. Esse mock é completamente isolado e não afeta o localStorage real do navegador.
     Object.defineProperty(window, "localStorage", {
       value: {
         getItem: jest.fn(() => null),
@@ -31,6 +40,7 @@ describe("Home Page integration tests", () => {
     const inputValue = "Nova Tarefa";
     render(<HomePage />);
 
+    //Pq usar id é melhor?
     const input: HTMLInputElement = screen.getByPlaceholderText(
       homeStrings.form.placeholder
     );
@@ -38,7 +48,6 @@ describe("Home Page integration tests", () => {
     fireEvent.change(input, { target: { value: inputValue } });
 
     const button = screen.getByText(homeStrings.form.button);
-
     fireEvent.click(button);
 
     const element = screen.queryByText(inputValue);
@@ -91,6 +100,7 @@ describe("Home Page integration tests", () => {
     const task = tasks[0];
 
     expect(task).not.toBeNull();
+    
     fireEvent.click(task);
     expect(task).toHaveProperty("checked", true);
     const taskText = screen.getByText(inputValue);
@@ -98,6 +108,7 @@ describe("Home Page integration tests", () => {
     expect(taskText).toHaveClass("text-gray-500");
   });
 
+  //Ver possibilidade de não depender de outras depêndencias, como o comportamento dos componentes.
   it("should delete a task and remove it from the document", async () => {
     const InputValue = "Tarefa para Deletar";
     render(<HomePage />);

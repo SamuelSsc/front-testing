@@ -2,6 +2,14 @@ import * as data from "@app/data";
 import { useTasks } from "./tasks.use-case";
 import { renderHook, act } from "@testing-library/react-hooks";
 
+
+// *********** UTILIZANDO JEST PARA TESTES UNITÁRIOS PODEMOS: ***********
+// Testar funções isoladas:
+// Comportamentos
+// Resultados
+// Validações 
+
+
 jest.mock("@app/data", () => ({
   getTasksFromStorage: jest.fn(),
   saveTasksToStorage: jest.fn(),
@@ -13,6 +21,7 @@ describe("useTasks hook unit tests", () => {
   });
 
   describe("addTask", () => {
+    //Testa o comportamento e resultado
     it("should add a new task", () => {
       const inputValue = "New Task";
       (data.getTasksFromStorage as jest.Mock).mockReturnValue([]);
@@ -30,6 +39,7 @@ describe("useTasks hook unit tests", () => {
       ]);
     });
 
+    //Testa o as validações
     it("should not add a task if the text is empty", () => {
       const inputValue = "";
       const { result } = renderHook(() => useTasks());
@@ -42,6 +52,7 @@ describe("useTasks hook unit tests", () => {
       expect(data.saveTasksToStorage).not.toHaveBeenCalled();
     });
 
+    //Testa o as validações
     it("should not add a task if the task already exists", () => {
       const inputValue = "Existing Task";
       (data.getTasksFromStorage as jest.Mock).mockReturnValue([
@@ -61,24 +72,25 @@ describe("useTasks hook unit tests", () => {
   });
 
   describe("removeTask", () => {
+    //Testa o comportamento e resultado AAA
     it("should remove a task", () => {
       const inputValue = "Task to Remove";
       (data.getTasksFromStorage as jest.Mock).mockReturnValue([
         { text: inputValue, checked: false },
       ]);
-
-      const { result } = renderHook(() => useTasks());
+      const { result } = renderHook(() => useTasks()); //Arrange
 
       act(() => {
-        result.current.removeTask(inputValue);
+        result.current.removeTask(inputValue); //Act
       });
 
-      expect(result.current.tasks).toHaveLength(0);
+      expect(result.current.tasks).toHaveLength(0);//Assert
       expect(data.saveTasksToStorage).toHaveBeenCalledWith([]);
     });
   });
 
   describe("toggleTask", () => {
+    //Testa o comportamento e resultado
     it("should toggle the checked state of a task", () => {
       const inputValue = "Task";
       (data.getTasksFromStorage as jest.Mock).mockReturnValue([
@@ -97,6 +109,7 @@ describe("useTasks hook unit tests", () => {
       ]);
     });
 
+    //Testa o comportamento e resultado
     it("should reorder tasks when toggled", () => {
       (data.getTasksFromStorage as jest.Mock).mockReturnValue([
         { text: "Task 1", checked: false },

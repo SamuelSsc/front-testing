@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+// *********** UTILIZANDO CYPRESS PARA TESTES E2E PODEMOS: ***********
+// Fluxos inteiros de funcionalidade desde a navegação ate o resultado da interação.
 
 describe(`Home Page e2e tests`, () => {
   
@@ -12,7 +14,9 @@ describe(`Home Page e2e tests`, () => {
 
     cy.get(`input[placeholder="Descreva sua tarefa"]`).type(newTask);
     cy.contains("Adicionar").click();
+
     cy.get("input[placeholder='Descreva sua tarefa']").should("be.empty");
+  
     cy.wait(500);
 
     cy.get(".todo-list li")
